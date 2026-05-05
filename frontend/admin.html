@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · AuditPilot</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="overflow-x-hidden" data-page="admin">
+
+  <div id="appSidebar"></div>
+
+  <main class="app-main">
+    <div class="app-container space-y-8">
+
+      <!-- Header -->
+      <div class="flex justify-between items-end">
+        <div>
+          <h1 class="font-display text-[#b5fff0] text-4xl">Administración</h1>
+          <p class="text-slate-400 mt-2">
+            Gestión de usuarios y permisos del sistema
+          </p>
+        </div>
+
+        <button id="addUserBtn" class="btn-saas">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          Nuevo usuario
+        </button>
+      </div>
+
+      <!-- KPI -->
+      <section class="grid md:grid-cols-3 gap-6">
+        <div class="panel p-6">
+          <p class="text-xs text-slate-400 uppercase">Total usuarios</p>
+          <p id="totalUsers" class="text-4xl font-display text-white mt-2">--</p>
+        </div>
+
+        <div class="panel p-6">
+          <p class="text-xs text-slate-400 uppercase">Admins</p>
+          <p id="totalAdmins" class="text-4xl font-display text-white mt-2">--</p>
+        </div>
+
+        <div class="panel p-6">
+          <p class="text-xs text-slate-400 uppercase">Usuarios</p>
+          <p id="totalNormal" class="text-4xl font-display text-white mt-2">--</p>
+        </div>
+      </section>
+
+      <!-- Tabla -->
+      <section class="panel overflow-hidden">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="text-slate-400 text-xs uppercase border-b border-white/10">
+              <th class="px-6 py-4">Email</th>
+              <th class="px-6 py-4">Rol</th>
+              <th class="px-6 py-4 text-right">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody id="usersTable"></tbody>
+        </table>
+      </section>
+
+    </div>
+  </main>
+
+    <!-- Modal crear usuario -->
+<div id="createUserModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+    <div class="w-full max-w-md bg-[#0F172A] border border-teal-400/20 rounded-2xl p-6">
+        <div class="flex items-start justify-between mb-6">
+        <div>
+            <h2 class="font-display text-2xl font-bold text-white">Nuevo usuario</h2>
+            <p class="text-sm text-slate-400 mt-1">Crea una cuenta y asigna permisos.</p>
+        </div>
+        <button id="closeCreateUserModal" class="text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        </div>
+
+        <form id="createUserForm" class="space-y-4">
+        <div>
+            <label class="block text-sm font-bold mb-2 text-slate-300">Email</label>
+            <input id="createEmail" type="email" required class="w-full bg-[#021627] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-400">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold mb-2 text-slate-300">Contraseña</label>
+            <input id="createPassword" type="password" required minlength="6" class="w-full bg-[#021627] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-400">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold mb-2 text-slate-300">Rol</label>
+            <select id="createRole" class="w-full bg-[#021627] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-400">
+            <option value="editor">Editor</option>
+            <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-saas w-full">Crear usuario</button>
+        </form>
+    </div>
+    </div>
+
+    <!-- Modal editar rol -->
+    <div id="editRoleModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+    <div class="w-full max-w-md bg-[#0F172A] border border-amber-400/20 rounded-2xl p-6">
+        <div class="flex items-start justify-between mb-6">
+        <div>
+            <h2 class="font-display text-2xl font-bold text-white">Editar permisos</h2>
+            <p id="editUserEmail" class="text-sm text-slate-400 mt-1"></p>
+        </div>
+        <button id="closeEditRoleModal" class="text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        </div>
+
+        <form id="editRoleForm" class="space-y-4">
+        <input type="hidden" id="editUserId">
+
+        <div>
+            <label class="block text-sm font-bold mb-2 text-slate-300">Rol</label>
+            <select id="editRole" class="w-full bg-[#021627] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-400">
+            <option value="editor">Editor</option>
+            <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-saas w-full">Guardar permisos</button>
+        </form>
+    </div>
+    </div>
+
+
+    <!-- Modal eliminar usuario -->
+    <div id="deleteUserModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+    <div class="w-full max-w-md bg-[#0F172A] border border-red-400/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-2">Eliminar usuario</h2>
+        <p class="text-sm text-slate-400 mb-6">Esta acción no se puede deshacer.</p>
+
+        <input type="hidden" id="deleteUserId">
+        <p id="deleteUserEmail" class="font-bold text-red-300 mb-6"></p>
+
+        <div class="flex gap-3">
+        <button id="cancelDeleteUser" class="flex-1 border border-white/10 text-slate-300 py-3 rounded-xl font-bold hover:bg-white/5">
+            Cancelar
+        </button>
+        <button id="confirmDeleteUser" class="flex-1 bg-red-500 text-white py-3 rounded-xl font-bold hover:bg-red-400">
+            Eliminar
+        </button>
+        </div>
+    </div>
+</div>
+  
+  <script type="module" src="./js/layout.js"></script>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

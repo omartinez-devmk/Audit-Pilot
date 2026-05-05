@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuditPilot · Auditoría Web</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="h-full overflow-y-auto overflow-x-hidden" data-page="audit">
+
+  <!-- Sidebar global -->
+  <div id="appSidebar"></div>
+
+  <!-- Background -->
+  <div class="grid-bg"></div>
+  <div class="halo"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- MAIN -->
+  <main class="app-main">
+
+    <!-- HERO -->
+    <section class="max-w-4xl mx-auto text-center pt-16 pb-12 px-6">
+
+      <div class="mb-8 shield-icon inline-block">
+        <div class="w-24 h-24 rounded-2xl flex items-center justify-center mx-auto bg-[#5EEAD4] shadow-lg shadow-teal-400/20">
+          <i data-lucide="radar" class="w-12 h-12 text-[#021627]"></i>
+        </div>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-5 animate-fade-up">
+        Analiza la salud digital de cualquier web
+      </h1>
+
+      <p class="text-lg sm:text-xl font-medium mb-12 animate-fade-up delay-1 text-muted">
+        Auditoría SEO, rendimiento y señales básicas de cumplimiento en segundos.
+      </p>
+
+      <form id="scanForm" class="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto animate-fade-up delay-2">
+        <input 
+          id="urlInput"
+          type="url"
+          placeholder="https://tudominio.com"
+          class="input-glow flex-1 px-6 py-4 rounded-full text-base"
+          required
+        >
+
+        <button id="scanBtn" type="submit" class="btn-saas whitespace-nowrap">
+          <i data-lucide="search" class="w-4 h-4"></i>
+          Analizar web
+        </button>
+      </form>
+
+    </section>
+
+    <!-- SCANNING -->
+    <section id="scanningSection" class="hidden max-w-2xl mx-auto px-6 py-12 text-center">
+      <div class="glow-card p-10" style="animation:pulse-glow 2s ease-in-out infinite">
+
+        <div class="flex items-center justify-center gap-3 mb-8">
+          <i data-lucide="radar" class="w-8 h-8 text-accent animate-spin"></i>
+          <span class="text-xl font-semibold">Escaneando web...</span>
+        </div>
+
+        <div class="w-full rounded-full overflow-hidden mb-6 scan-progress-wrapper">
+          <div id="scanBar" class="scan-bar"></div>
+        </div>
+
+        <p id="scanStatus" class="text-base font-medium text-muted">
+          Conectando con la web...
+        </p>
+
+      </div>
+    </section>
+
+    <!-- RESULTADOS -->
+    <section id="resultsSection" class="hidden max-w-6xl mx-auto px-6 pb-8">
+
+      <!-- RESUMEN -->
+      <div class="glow-card p-8 sm:p-10 mb-6">
+
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8 pb-8 soft-divider">
+          <div>
+            <p class="text-sm font-medium mb-2 text-muted">Resultado del análisis para</p>
+            <p id="resultUrl" class="font-bold text-xl text-accent break-all"></p>
+          </div>
+
+          <div id="riskBadge" class="px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div class="metric-card">
+            <p class="metric-label">Puntuación global</p>
+            <p id="globalScore" class="metric-number">--</p>
+            <div class="progress-bg">
+              <div id="globalScoreBar" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-label">Rendimiento</p>
+            <p id="performanceScore" class="metric-number">--</p>
+            <div class="progress-bg">
+              <div id="performanceBar" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-label">Incidencias</p>
+            <p id="issuesCount" class="metric-number">--</p>
+            <p class="text-sm mt-2 text-muted">Puntos de mejora detectados</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- BLOQUES -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <div class="glow-card p-6">
+          <h3 class="text-2xl font-bold mb-4">Checklist SEO técnico</h3>
+          <div id="seoChecklist" class="space-y-3"></div>
+        </div>
+
+        <div class="glow-card p-6">
+          <h3 class="text-2xl font-bold mb-4">Recomendaciones prioritarias</h3>
+          <div id="issuesList" class="space-y-3"></div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-8 text-center">
+        <button id="viewReportBtn" class="btn-primary px-10 py-4 text-lg">
+          Ver informe completo
+        </button>
+      </div>
+
+      <!-- INFO -->
+      <div class="glow-card p-6 mt-6">
+        <div class="flex gap-3">
+          <i data-lucide="info" class="info-icon"></i>
+          <p class="text-sm font-medium text-muted">
+            Este análisis combina lectura HTML básica, datos de Google PageSpeed Insights y reglas internas.
+            Es una auditoría orientativa y puede ampliarse con análisis RGPD, cookies y tracking.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ERROR -->
+    <section id="errorSection" class="hidden max-w-2xl mx-auto px-6 py-12 text-center">
+
+      <div class="glow-card p-10 error-card">
+
+        <div class="flex items-center justify-center gap-3 mb-6">
+          <i data-lucide="alert-circle" class="w-8 h-8 text-red-500"></i>
+          <span class="text-xl font-semibold">Error en el análisis</span>
+        </div>
+
+        <p id="errorMessage" class="text-base font-medium mb-8 text-muted"></p>
+
+        <button onclick="document.getElementById('urlInput').focus();window.scrollTo({top:0,behavior:'smooth'})" class="btn-secondary">
+          Intentar de nuevo
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="max-w-5xl mx-auto px-6 py-16">
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+        <div class="glow-card p-8 text-center">
+          <div class="icon-box"><i data-lucide="search-check"></i></div>
+          <h3 class="font-bold text-lg mb-2">SEO técnico</h3>
+          <p class="text-sm font-medium text-muted">Title, meta description y estructura básica.</p>
+        </div>
+
+        <div class="glow-card p-8 text-center">
+          <div class="icon-box"><i data-lucide="gauge"></i></div>
+          <h3 class="font-bold text-lg mb-2">Performance real</h3>
+          <p class="text-sm font-medium text-muted">Datos conectados con PageSpeed Insights.</p>
+        </div>
+
+        <div class="glow-card p-8 text-center">
+          <div class="icon-box"><i data-lucide="shield-alert"></i></div>
+          <h3 class="font-bold text-lg mb-2">Enfoque RGPD</h3>
+          <p class="text-sm font-medium text-muted">Detección de cookies y tracking.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-10 text-sm font-medium text-muted">
+      © 2026 AuditPilot · Proyecto DAW · Análisis orientativo
+    </footer>
+
+  </main>
+
+  <script type="module" src="./js/layout.js"></script>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

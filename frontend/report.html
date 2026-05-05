@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Informe de Auditoría</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/styles.css">
+  
+</head>
+
+<body class="h-full overflow-y-auto overflow-x-hidden" data-page="report">
+
+  <div id="appSidebar"></div>
+
+    <main class="app-main">
+
+      <section class="hidden print:block mb-10">
+        <div class="text-center">
+          <h1 class="text-3xl font-bold mb-4">Informe de Auditoría Web</h1>
+          <p class="text-sm text-slate-500 mb-2">AuditPilot</p>
+          <p class="text-sm text-slate-500">
+            ${new Date().toLocaleDateString("es-ES")}
+          </p>
+
+          <div class="mt-6 text-base">
+            <span class="font-semibold">Dominio analizado:</span><br>
+            <span id="reportUrlPrint" class="font-mono"></span>
+          </div>
+        </div>
+      </section>
+      
+      <button onclick="window.location.href='./projects.html'" class="text-sm text-slate-400 hover:text-teal-400 mb-4 flex items-center gap-2 print:hidden">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Volver a proyectos
+      </button>
+      
+      <header class="flex flex-col md:flex-row justify-between gap-4 mb-8">
+        <div>
+          <p class="teal text-sm font-semibold mb-2">Informe completo</p>
+          <h1 class="font-display text-[#b5fff0] text-4xl">Auditoría web</h1>
+          <p class="text-slate-400 mt-2">
+            Resultado para <span id="reportUrl" class="teal font-mono"></span>
+          </p>
+        </div>
+
+        <div class="flex gap-3 items-start print:hidden">
+          <button onclick="window.print()" class="btn-saas-outline w-auto self-start">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Exportar PDF
+          </button>
+
+          <button onclick="window.location.href='./index.html'" class="btn-saas w-auto self-start">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            Nuevo análisis
+          </button>
+        </div>
+      </header>
+
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="glass-panel p-6">
+          <p class="text-xs uppercase tracking-widest text-slate-500 mb-4">Puntuación global</p>
+          <p id="scoreGlobal" class="score text-6xl font-bold teal">--</p>
+          <div class="progress-bg mt-6">
+            <div id="scoreGlobalBar" class="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6">
+          <p class="text-xs uppercase tracking-widest text-slate-500 mb-4">Rendimiento</p>
+          <p id="performanceScore" class="score text-6xl font-bold teal">--</p>
+          <div class="progress-bg mt-6">
+            <div id="performanceBar" class="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6">
+          <p class="text-xs uppercase tracking-widest text-slate-500 mb-4">Incidencias</p>
+          <p id="issuesTotal" class="score text-6xl font-bold teal">--</p>
+          <p class="text-sm text-slate-400 mt-4">Problemas detectados en SEO, RGPD y rendimiento.</p>
+        </div>
+      </section>
+
+      <section class="glass-panel p-6 mb-6">
+        <div class="flex items-center gap-2 mb-6">
+          <i data-lucide="bar-chart-3" class="w-5 h-5 text-teal-300"></i>
+          <h2 class="text-2xl font-bold">Resumen por áreas</h2>
+        </div>
+
+        <div id="barChart" class="space-y-5"></div>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+        <div class="glass-panel p-6">
+          <h2 class="text-2xl font-bold mb-6">Incidencias detectadas</h2>
+          <div id="issuesList" class="space-y-4"></div>
+        </div>
+
+        <div class="glass-panel p-6">
+          <h2 class="text-2xl font-bold mb-6">Recomendaciones</h2>
+          <div id="recommendationsList" class="space-y-6"></div>
+        </div>
+
+      </section>
+
+      <section class="glass-panel p-6 mb-6">
+        <div class="flex items-center gap-2 mb-6">
+          <i data-lucide="shield-check" class="w-5 h-5 text-teal-300"></i>
+          <h2 class="text-2xl font-bold">Desglose RGPD</h2>
+        </div>
+
+        <div id="rgpdChecks" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </section>
+
+      <section class="glass-panel p-6">
+        <div class="flex items-center gap-2 mb-6">
+          <i data-lucide="search-check" class="w-5 h-5 text-teal-300"></i>
+          <h2 class="text-2xl font-bold">Checklist SEO técnico</h2>
+        </div>
+
+        <div id="seoChecks" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <section class="hidden print:block mt-12 text-center">
+        <div class="border-t pt-6 mt-6">
+          <p class="text-sm text-slate-500 mb-2">
+            Este informe es una auditoría automática basada en señales técnicas, SEO y cumplimiento RGPD.
+          </p>
+
+          <p class="text-sm font-semibold">
+            ¿Quieres un análisis completo y personalizado?
+          </p>
+
+          <p class="text-sm text-slate-500 mt-2">
+            Contacta con un especialista para una auditoría avanzada.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  
+
+  <script type="module" src="./js/layout.js"></script>
+  <script type="module" src="./js/report.js"></script>
+</body>
+</html>

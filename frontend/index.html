@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AuditPilot · Auditoría SEO, RGPD y rendimiento</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="landing-page overflow-x-hidden">
+
+  <header class="landing-header">
+    <div class="landing-brand">
+      <div class="landing-logo">
+        <i data-lucide="radar" class="w-5 h-5"></i>
+      </div>
+      <div>
+        <p class="font-display text-lg font-bold text-teal-300 leading-none">AuditPilot</p>
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">SEO · RGPD · Rendimiento</p>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm text-slate-400">
+      <a href="#beneficios" class="hover:text-teal-300">Beneficios</a>
+      <a href="#modulos" class="hover:text-teal-300">Módulos</a>
+      <a href="#metricas" class="hover:text-teal-300">Métricas</a>
+    </nav>
+
+    <button onclick="window.location.href='./login.html'" class="btn-saas">
+      Acceder
+    </button>
+  </header>
+
+  <main class="landing-main">
+
+    <section class="landing-hero">
+      <div class="landing-hero-content">
+        <div class="landing-pill">
+          <span></span>
+          Plataforma de auditoría web
+        </div>
+
+        <h1 class="landing-title">
+          Audita SEO, RGPD y rendimiento desde un único panel.
+        </h1>
+
+        <p class="landing-subtitle">
+          AuditPilot analiza webs, detecta incidencias técnicas y convierte los datos en informes claros, accionables y listos para compartir.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <button onclick="window.location.href='./login.html'" class="btn-saas">
+            <i data-lucide="rocket" class="w-4 h-4"></i>
+            Probar auditoría
+          </button>
+
+          <button onclick="document.getElementById('beneficios').scrollIntoView({behavior:'smooth'})" class="btn-saas-outline">
+            Ver beneficios
+          </button>
+        </div>
+
+        <div class="landing-trust">
+          <span>Diseñado para</span>
+          <strong>MARKETING</strong>
+          <strong>LEGAL</strong>
+          <strong>SEO</strong>
+        </div>
+      </div>
+
+      <div class="landing-preview-image">
+        <img src="./assets/lp-main-image.png" alt="Dashboard AuditPilot">
+    </div>
+    </section>
+
+    <section id="beneficios" class="landing-section">
+      <div class="landing-section-head">
+        <h2>Una auditoría clara. Tres áreas críticas.</h2>
+        <p>Detecta oportunidades SEO, señales RGPD visibles y problemas de rendimiento sin perderte entre datos técnicos.</p>
+      </div>
+
+      <div class="landing-cards">
+        <article class="landing-card">
+          <div class="landing-card-icon"><i data-lucide="search-check"></i></div>
+          <h3>SEO técnico</h3>
+          <p>Comprueba title, meta description, H1 y señales básicas que afectan a la visibilidad orgánica.</p>
+        </article>
+
+        <article class="landing-card">
+          <div class="landing-card-icon"><i data-lucide="shield-alert"></i></div>
+          <h3>Señales RGPD</h3>
+          <p>Identifica políticas legales, cookies, tracking y formularios con posibles riesgos de cumplimiento.</p>
+        </article>
+
+        <article class="landing-card">
+          <div class="landing-card-icon"><i data-lucide="gauge"></i></div>
+          <h3>Rendimiento</h3>
+          <p>Consulta métricas conectadas con PageSpeed para priorizar mejoras técnicas de impacto real.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="modulos" class="landing-section">
+      <div class="landing-section-head">
+        <h2>Del escaneo al informe, sin fricción.</h2>
+        <p>AuditPilot está pensado para trabajar con proyectos, repetir auditorías y generar entregables profesionales.</p>
+      </div>
+
+      <div class="landing-bento">
+        <article class="landing-bento-card large">
+          <div>
+            <i data-lucide="activity" class="landing-bento-icon"></i>
+            <h3>Análisis automático</h3>
+            <p>Introduce una URL y recibe un diagnóstico estructurado con incidencias, puntuación global y recomendaciones.</p>
+          </div>
+          <div class="landing-progress">
+            <span></span>
+          </div>
+        </article>
+
+        <article class="landing-bento-card">
+          <i data-lucide="file-down" class="landing-bento-icon"></i>
+          <h3>Informes exportables</h3>
+          <p>Genera informes visuales preparados para cliente, profesor o equipo interno.</p>
+        </article>
+
+        <article class="landing-bento-card">
+          <i data-lucide="folder-kanban" class="landing-bento-icon"></i>
+          <h3>Gestión de proyectos</h3>
+          <p>Guarda webs analizadas y consulta sus últimos resultados desde un hub centralizado.</p>
+        </article>
+
+        <article class="landing-bento-card large">
+          <div>
+            <i data-lucide="users" class="landing-bento-icon"></i>
+            <h3>Roles de usuario</h3>
+            <p>Administra accesos con perfiles diferenciados para gestión y uso operativo de la plataforma.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="metricas" class="landing-metrics">
+      <div>
+        <strong>3</strong>
+        <span>Áreas auditadas</span>
+      </div>
+      <div>
+        <strong>100%</strong>
+        <span>Orientado a informes</span>
+      </div>
+      <div>
+        <strong>1</strong>
+        <span>Panel centralizado</span>
+      </div>
+    </section>
+
+    <section class="landing-cta">
+      <h2>Convierte una URL en un diagnóstico accionable.</h2>
+      <p>Accede a AuditPilot y lanza tu primera auditoría SEO, RGPD y rendimiento.</p>
+      <button onclick="window.location.href='./login.html'" class="btn-saas">
+        Entrar en la aplicación
+      </button>
+    </section>
+
+  </main>
+
+  <footer class="landing-footer">
+    <div>
+      <strong>AuditPilot</strong>
+      <p>Proyecto DAW · Auditoría web inteligente</p>
+    </div>
+
+    <div class="landing-footer-links">
+      <a href="./login.html">Login</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#modulos">Módulos</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
