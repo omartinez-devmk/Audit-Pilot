@@ -2,7 +2,7 @@ const API_URL =
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
     ? "http://localhost:3000"
-    : "https://TU-BACKEND.onrender.com";
+    : "https://auditpilot-backend.onrender.com";
 
 const loginForm = document.getElementById("loginForm");
 const message = document.getElementById("loginMessage");
