@@ -997,3 +997,22 @@ h3,
     max-width: 100%;
   }
 }
+
+/* Scrollbar moderna */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #021627;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(94, 234, 212, 0.4);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(94, 234, 212, 0.7);
+}
