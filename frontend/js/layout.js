@@ -2,7 +2,7 @@ const token = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user") || "{}");
 
 if (!token || !user.id) {
-  window.location.href = "./login.html";
+  window.location.replace("./login.html");
 }
 
 const currentPage = document.body.dataset.page;
@@ -81,7 +81,7 @@ document.addEventListener("click", (e) => {
     localStorage.removeItem("user");
     localStorage.removeItem("auditData");
     localStorage.removeItem("prefillUrl");
-    window.location.href = "./login.html";
+    window.location.replace("./login.html");
   }
 });
 
@@ -101,6 +101,15 @@ document.addEventListener("click", (e) => {
   if (overlay || navLink) {
     sidebarPanel.classList.remove("is-open");
     sidebarOverlay.classList.remove("is-open");
+  }
+});
+
+window.addEventListener("pageshow", () => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  if (!token || !user.id) {
+    window.location.replace("./login.html");
   }
 });
 
