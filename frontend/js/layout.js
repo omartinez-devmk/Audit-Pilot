@@ -41,7 +41,7 @@ if (sidebar) {
       </nav>
 
       <div class="px-6 mt-auto">
-        <button onclick="window.location.href='./index.html'" class="w-full py-3 bg-[#5EEAD4] text-[#021627] font-bold text-sm rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+        <button onclick="window.location.href='./audit.html'" class="w-full py-3 bg-[#5EEAD4] text-[#021627] font-bold text-sm rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
           <i data-lucide="plus" class="w-4 h-4"></i>
           Nueva auditoría
         </button>

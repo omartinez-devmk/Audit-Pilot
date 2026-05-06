@@ -155,7 +155,7 @@ function pintarTabla(projects) {
     
     tr.querySelector(".rescan-btn").addEventListener("click", () => {
       localStorage.setItem("prefillUrl", project.url);
-      window.location.href = "./index.html";
+      window.location.href = "./audit.html";
     });
 
     tr.querySelector(".edit-project-btn").addEventListener("click", () => {

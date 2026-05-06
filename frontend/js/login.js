@@ -41,9 +41,9 @@ loginForm.addEventListener("submit", async (e) => {
 
     setTimeout(() => {
       if (data.user.role === "admin") {
-        window.location.href = "./audit.html";
+        window.location.replace("./audit.html");
       } else {
-        window.location.href = "./audit.html";
+        window.location.replace("./audit.html");
       }
     }, 700);
 
