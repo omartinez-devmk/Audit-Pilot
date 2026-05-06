@@ -21,7 +21,7 @@
     <div class="app-container space-y-8">
 
       <!-- Header -->
-      <div class="flex justify-between items-end">
+      <div class="admin-page-header">
         <div>
           <h1 class="font-display text-[#b5fff0] text-4xl">Administración</h1>
           <p class="text-slate-400 mt-2">
@@ -29,7 +29,7 @@
           </p>
         </div>
 
-        <button id="addUserBtn" class="btn-saas">
+        <button id="addUserBtn" class="btn-saas admin-header-btn">
           <i data-lucide="user-plus" class="w-4 h-4"></i>
           Nuevo usuario
         </button>
@@ -54,18 +54,20 @@
       </section>
 
       <!-- Tabla -->
-      <section class="panel overflow-hidden">
-        <table class="w-full text-left">
-          <thead>
-            <tr class="text-slate-400 text-xs uppercase border-b border-white/10">
-              <th class="px-6 py-4">Email</th>
-              <th class="px-6 py-4">Rol</th>
-              <th class="px-6 py-4 text-right">Acciones</th>
-            </tr>
-          </thead>
+      <section class="panel admin-table-panel">
+        <div class="admin-table-scroll">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="text-slate-400 text-xs uppercase border-b border-white/10">
+                <th class="px-6 py-4">Email</th>
+                <th class="px-6 py-4">Rol</th>
+                <th class="px-6 py-4 text-right">Acciones</th>
+              </tr>
+            </thead>
 
-          <tbody id="usersTable"></tbody>
-        </table>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
       </section>
 
     </div>
