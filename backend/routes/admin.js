@@ -8,6 +8,14 @@ function isAdmin(req) {
   return req.headers["x-user-role"] === "admin";
 }
 
+async function contarAdmins() {
+  const result = await pool.query(
+    "select count(*)::int as total from users where role = 'admin'"
+  );
+
+  return result.rows[0].total;
+}
+
 router.get("/users", async (req, res) => {
   try {
     if (!isAdmin(req)) {
@@ -86,6 +94,27 @@ router.put("/users/:id", async (req, res) => {
       return res.status(400).json({ error: "Rol no válido" });
     }
 
+    const currentUserResult = await pool.query(
+      "select id, role from users where id = $1",
+      [userId]
+    );
+
+    if (currentUserResult.rows.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const currentUser = currentUserResult.rows[0];
+
+    if (currentUser.role === "admin" && role !== "admin") {
+      const totalAdmins = await contarAdmins();
+
+      if (totalAdmins <= 1) {
+        return res.status(400).json({
+          error: "Debe existir al menos un administrador",
+        });
+      }
+    }
+
     const result = await pool.query(
       `update users
        set role = $1
@@ -93,10 +122,6 @@ router.put("/users/:id", async (req, res) => {
        returning id, email, role, created_at`,
       [role, userId]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
 
     res.json({
       message: "Usuario actualizado correctamente",
@@ -118,7 +143,30 @@ router.delete("/users/:id", async (req, res) => {
     const currentUserId = req.headers["x-user-id"];
 
     if (userId === currentUserId) {
-      return res.status(400).json({ error: "No puedes eliminar tu propio usuario" });
+      return res.status(400).json({
+        error: "No puedes eliminar tu propio usuario",
+      });
+    }
+
+    const userToDeleteResult = await pool.query(
+      "select id, role from users where id = $1",
+      [userId]
+    );
+
+    if (userToDeleteResult.rows.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const userToDelete = userToDeleteResult.rows[0];
+
+    if (userToDelete.role === "admin") {
+      const totalAdmins = await contarAdmins();
+
+      if (totalAdmins <= 1) {
+        return res.status(400).json({
+          error: "No puedes eliminar el último administrador",
+        });
+      }
     }
 
     const result = await pool.query(
@@ -128,13 +176,9 @@ router.delete("/users/:id", async (req, res) => {
       [userId]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-
     res.json({
       message: "Usuario eliminado correctamente",
-      userId,
+      userId: result.rows[0].id,
     });
   } catch (error) {
     console.error("Error eliminando usuario:", error);
